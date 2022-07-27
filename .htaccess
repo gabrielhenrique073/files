@@ -1,0 +1,15 @@
+Options -MultiViews
+RewriteEngine On
+
+DirectoryIndex /public/index.php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+RewriteCond %{THE_REQUEST} \/public\/share\.php\s [NC]
+RewriteRule ^ /compartilhar? [R=301,L]
+RewriteRule ^compartilhar$ /public/share.php [L]
+
+RewriteCond %{THE_REQUEST} \/public\/download\.php\?fileId=([a-z0-9]+)\s [NC]
+RewriteRule ^ /baixar/%1? [R=301,L]
+RewriteRule ^baixar/([a-z0-9]+)$ /public/download.php?fileId=$1 [L]
