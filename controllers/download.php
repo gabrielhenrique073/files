@@ -29,6 +29,7 @@ $storagedFileSize = filesize($storagedFilePath);
 $storagedFileHandler = fopen($storagedFilePath, 'r');
 $storagedFileContent = fread($storagedFileHandler, $storagedFileSize);
 
+header('Content-Type: image/jpeg');
 header("Content-Disposition: attachment; filename=\"$uploadedFileName.$uploadedFileExt\"");
 header("Cache-Control: public, max-age=0");
 
