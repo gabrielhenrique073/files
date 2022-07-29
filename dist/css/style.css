@@ -1,0 +1,120 @@
+body#upload {
+  background-color: #2f80ed;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  align-items: center;
+}
+body#upload #app {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 60px;
+  max-width: 650px;
+}
+@media screen and (max-width: 480px) {
+  body#upload #app {
+    padding: 10px;
+  }
+}
+body#upload #app form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 350px;
+}
+body#upload #app form div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+body#upload #app form div label[for=file] {
+  background-color: rgba(47, 128, 237, 0.062745098);
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: filter 150ms;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-radius: 5px;
+  gap: 10px;
+}
+body#upload #app form div label[for=file]:active {
+  filter: brightness(0.9);
+}
+body#upload #app form div label[for=file] i {
+  color: #ffffff;
+  font-size: 50px;
+}
+body#upload #app form div label[for=file] span {
+  width: fit-content;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+}
+body#upload #app form div input[type=file] {
+  display: none;
+}
+
+body#download {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  align-items: center;
+}
+body#download #app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 60px;
+  max-width: 650px;
+}
+@media screen and (max-width: 480px) {
+  body#download #app {
+    padding: 10px;
+  }
+}
+body#download #app i {
+  color: #2f80ed;
+  font-size: 50px;
+}
+body#download #app span {
+  width: fit-content;
+  color: #2f80ed;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+}
+body#download #app a {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  background-color: #2f80ed;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0px 0px 5px rgba(47, 128, 237, 0.2509803922);
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+body {
+  margin: 0px;
+}
+body *:focus {
+  outline: none;
+}
+
+/*# sourceMappingURL=style.css.map */

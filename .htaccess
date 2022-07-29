@@ -1,15 +1,23 @@
 Options -MultiViews
 RewriteEngine On
 
-DirectoryIndex /public/index.php
+DirectoryIndex /upload.html
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)/$ /$1 [L,R=301]
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
 
-RewriteCond %{THE_REQUEST} \/public\/share\.php\s [NC]
-RewriteRule ^ /compartilhar? [R=301,L]
-RewriteRule ^compartilhar$ /public/share.php [L]
+RewriteCond %{THE_REQUEST} \s\/404\.html\s [NC]
+RewriteRule ^ /404? [R=301,L]
+RewriteRule ^404$ /404.html [L]
 
-RewriteCond %{THE_REQUEST} \/public\/download\.php\?fileId=([a-z0-9]+)\s [NC]
-RewriteRule ^ /baixar/%1? [R=301,L]
-RewriteRule ^baixar/([a-z0-9]+)$ /public/download.php?fileId=$1 [L]
+RewriteCond %{THE_REQUEST} \s\/500\.html\s [NC]
+RewriteRule ^ /500? [R=301,L]
+RewriteRule ^500$ /500.html [L]
+
+RewriteCond %{THE_REQUEST} \s\/upload\.html\s [NC]
+RewriteRule ^ /upload? [R=301,L]
+RewriteRule ^upload$ /upload.html [L]
+
+RewriteCond %{THE_REQUEST} \s/download\.html\?fileId=(.*)\s [NC]
+RewriteRule ^ /download/%1? [R=301,L]
+RewriteRule ^download/(.*)$ /download.html?fileId=$1 [L]

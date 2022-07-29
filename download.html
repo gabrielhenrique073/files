@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="theme-color" content="#ffffff">
+        
+        <title>Files</title>
+    
+        <link rel="stylesheet" href="/dist/css/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+
+        <script src="https://kit.fontawesome.com/b5bcf2ec39.js" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script defer>
+            window.onload = function(){
+                new Vue(
+                    {
+                        el: '#app',
+                        data: function(){
+                            return {
+                                id: null,
+                                name: null,
+                                extension: null,
+                                date: null,
+
+                                isImage: false,
+                                isCompressed: false,
+                                isScript: false,
+                                isWord: false,
+                                isVideo: false,
+                                isPowerpoint: false,
+                                isPdf: false,
+                                isText: false,
+                                isExcel: false,
+                                isCsv: false,
+                                isAudio: false,
+                                isUnknown: false,
+                            }
+                        },
+                        created: async function(e){
+                            const vue = this;
+                            let params = new URLSearchParams(window.location.search);
+                            let fileId = params.get('fileId');
+
+                            if(!fileId){
+                                params = window.location.pathname.split('/');
+                                if(params.length >= 3){
+                                    fileId = params[2];
+                                }
+                            }
+
+                            const response = await fetch(`/controllers/info.php?fileId=${fileId}`);
+
+                            if(response.status != 200)
+                                return window.location.href = `/${response.status}.html`;
+
+                            const info = await response.json();
+                            vue.id = fileId;
+                            vue.name = info.name;
+                            vue.extension = info.extension;
+                            vue.date = info.date;
+
+                            if(vue.extension.match(/(png|jpeg|jpg|gif|ico)/gi)) vue.isImage = true;
+                            else if(vue.extension.match(/(zip|7z|rar)/gi)) vue.isCompressed = true;
+                            else if(vue.extension.match(/(php|js|css|html)/gi)) vue.isScript = true;
+                            else if(vue.extension.match(/(docx)/gi)) vue.isWord = true;
+                            else if(vue.extension.match(/(mp4)/gi)) vue.isVideo = true;
+                            else if(vue.extension.match(/(pptx|ppt)/gi)) vue.isPowerpoint = true;
+                            else if(vue.extension.match(/(pdf)/gi)) vue.isPdf = true;
+                            else if(vue.extension.match(/(txt)/gi)) vue.isText = true;
+                            else if(vue.extension.match(/(xls)/gi)) vue.isExcel = true;
+                            else if(vue.extension.match(/(cvs)/gi)) vue.isCsv = true;
+                            else if(vue.extension.match(/(mp3|wav|flac)/gi)) vue.isAudio = true;
+                            else vue.isUnknown = true;
+                        },
+                        methods: {
+
+                        }
+                    }
+                );
+            }
+        </script>
+    </head>
+    <body id="download">
+        <div id="app">
+            <i v-if="isCompressed" class="fa-solid fa-file-zipper"></i>
+            <i v-if="isWord" class="fa-solid fa-file-word"></i>
+            <i v-if="isVideo" class="fa-solid fa-file-video"></i>
+            <i v-if="isPowerpoint" class="fa-solid fa-file-powerpoint"></i>
+            <i v-if="isPdf" class="fa-solid fa-file-pdf"></i>
+            <i v-if="isText" class="fa-solid fa-file-lines"></i>
+            <i v-if="isImage" class="fa-solid fa-file-image"></i>
+            <i v-if="isScript" class="fa-solid fa-file-code"></i>
+            <i v-if="isExcel" class="fa-solid fa-file-excel"></i>
+            <i v-if="isCsv" class="fa-solid fa-file-csv"></i>
+            <i v-if="isAudio"class="fa-solid fa-file-audio"></i>
+            <i v-if="isUnknown" class="fa-solid fa-file"></i>
+            <span>{{name}}.{{extension}}</span>
+            <a :href="'/controllers/download.php?fileId=' + id">Download file</a>
+        </div>
+    </body>
+</html>

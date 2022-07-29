@@ -1,0 +1,51 @@
+body#download{
+    background-color: #ffffff;
+
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+
+    #app{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        padding: 60px;
+        max-width: 650px;
+
+        @media screen and (max-width: $mobile){
+            padding: 10px;
+        }
+
+        i{
+            color: #2f80ed;
+            font-size: 50px;
+        }
+        span{
+            width: fit-content;
+            color: #2f80ed;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            display: block;
+        }
+        a{
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            background-color: #2f80ed;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0px 0px 5px #2f80ed40;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    }
+}

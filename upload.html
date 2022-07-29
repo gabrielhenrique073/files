@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="theme-color" content="#ffffff">
+        
+        <title>Files</title>
+    
+        <link rel="stylesheet" href="/dist/css/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+
+        <script src="https://kit.fontawesome.com/b5bcf2ec39.js" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script defer>
+            window.onload = function(){
+                new Vue(
+                    {
+                        el: '#app',
+                        data: function(){
+                            return {
+                                isUploading: false,
+                                isUploadFinished: false,
+                                isUploadFailed: false,
+                                uploadingProgress: 0,
+                            }
+                        },
+                        methods: {
+                            onFileSelected: function(e){
+
+                                if(!e.target.files.length)
+                                    return;
+                                
+                                const vue = this;
+                                const req = new XMLHttpRequest();
+                                const form = new FormData(e.target.form);
+                                
+                                req.onreadystatechange = function(n){
+                                    switch(req.readyState){
+                                        case 1:
+                                            vue.isUploading = true;
+                                            vue.isUploadFinished = false;
+                                            vue.isUploadFailed = false;
+                                            vue.uploadingProgress = 0;
+                                            break;
+                                        case 4:
+                                            vue.isUploading = false;
+                                            e.target.value = null;
+
+                                            switch(req.status){
+                                                case 201:
+                                                    vue.isUploadFinished = true;
+                                                    vue.isAppDestroyed = true;
+                                                    window.location = `/download.html?fileId=${req.responseText}`;
+                                                    break;
+                                                default:
+                                                    vue.isUploadFailed = true;
+                                                    break;
+                                            }
+                                            break;
+                                    }
+                                }
+                                req.upload.onprogress = function(n){
+                                    vue.uploadingProgress = Math.round(
+                                        (n.loaded / n.total) * 100
+                                    );
+                                }
+                                req.open('post', '/controllers/upload.php');
+                                req.send(form);
+                            },
+                        }
+                    }
+                );
+            }
+        </script>
+    </head>
+    <body id="upload">
+        <div id="app">
+            <form method="post" action="/controllers/upload.php">
+                <div>
+                    <label for="file" :data-is-upload-failed="isUploadFailed" :data-is-upload-finished="isUploadFinished">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span v-if="!isUploadFailed && !isUploading && !isUploadFinished">Click here to upload a file</span>
+                        <span v-if="isUploading">{{ uploadingProgress }}%</span>
+                        <span v-if="isUploadFinished">Upload finished</span>
+                        <span v-if="isUploadFailed">Upload failed, try again</span>
+                    </label>
+                    <input id="file" type="file" name="file" v-on:change="onFileSelected">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

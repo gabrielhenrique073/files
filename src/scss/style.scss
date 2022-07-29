@@ -1,0 +1,12 @@
+$mobile: 480px;
+
+@import 'upload.scss';
+@import 'download.scss';
+
+body{
+    margin: 0px;
+
+    & *:focus{
+        outline: none;
+    }
+}
