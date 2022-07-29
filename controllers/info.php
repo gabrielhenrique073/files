@@ -22,6 +22,7 @@ header('content-type: application/json');
 echo json_encode(
     [
         'name' => $pointerContent['file']['uploaded']['name'],
+        'type' => $pointerContent['file']['uploaded']['type'],
         'extension' => $pointerContent['file']['uploaded']['extension'],
         'date' => $pointerContent['file']['uploaded']['date'],
     ]

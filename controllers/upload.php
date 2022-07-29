@@ -7,6 +7,7 @@ if(!isset($_FILES['file']))
 
 $uploadName = pathinfo($_FILES['file']['name'], PATHINFO_FILENAME);
 $uploadExt = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+$uploadType = $_FILES['file']['type'];
 $uploadPath = $_FILES['file']['tmp_name'];
 $uploadError = $_FILES['file']['error'];
 
@@ -37,6 +38,7 @@ $isWrote = file_put_contents($pointerPath,
                 'uploaded' => [
                     'name' => $uploadName,
                     'extension' => $uploadExt,
+                    'type' => $uploadType,
                     'date' => time(),
                 ],
                 'storaged' => [

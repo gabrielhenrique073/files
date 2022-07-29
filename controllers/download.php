@@ -20,6 +20,7 @@ if(!$pointerContent)
 
 $uploadedFileName = $pointerContent['file']['uploaded']['name'];
 $uploadedFileExt = $pointerContent['file']['uploaded']['extension'];
+$uploadedFileType = $pointerContent['file']['uploaded']['type'];
 
 $storagedFileName = $pointerContent['file']['storaged']['name'];
 $storagedFileExt = $pointerContent['file']['storaged']['extension'];
@@ -29,7 +30,7 @@ $storagedFileSize = filesize($storagedFilePath);
 $storagedFileHandler = fopen($storagedFilePath, 'r');
 $storagedFileContent = fread($storagedFileHandler, $storagedFileSize);
 
-header('Content-Type: image/jpeg');
+header("Content-Type: $uploadedFileType");
 header("Content-Disposition: attachment; filename=\"$uploadedFileName.$uploadedFileExt\"");
 header("Cache-Control: public, max-age=0");
 
