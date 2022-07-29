@@ -9,27 +9,18 @@ body#upload #app {
   display: flex;
   flex-direction: column;
   gap: 40px;
-  padding: 60px;
+  padding: 10px;
   max-width: 650px;
-}
-@media screen and (max-width: 480px) {
-  body#upload #app {
-    padding: 10px;
-  }
 }
 body#upload #app form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   width: 100%;
   max-width: 350px;
 }
-body#upload #app form div {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-body#upload #app form div label[for=file] {
+body#upload #app form label[for=file] {
   background-color: rgba(47, 128, 237, 0.062745098);
   box-sizing: border-box;
   cursor: pointer;
@@ -37,19 +28,17 @@ body#upload #app form div label[for=file] {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 40px;
-  padding-bottom: 40px;
   border-radius: 5px;
   gap: 10px;
 }
-body#upload #app form div label[for=file]:active {
+body#upload #app form label[for=file]:active {
   filter: brightness(0.9);
 }
-body#upload #app form div label[for=file] i {
+body#upload #app form label[for=file] i {
   color: #ffffff;
   font-size: 50px;
 }
-body#upload #app form div label[for=file] span {
+body#upload #app form label[for=file] span {
   width: fit-content;
   color: #ffffff;
   font-family: "Roboto", sans-serif;
@@ -57,8 +46,33 @@ body#upload #app form div label[for=file] span {
   font-weight: 500;
   display: block;
 }
-body#upload #app form div input[type=file] {
+body#upload #app form input[type=file] {
   display: none;
+}
+body#upload #app form button {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  background-color: white;
+  color: #2f80ed;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.2509803922);
+  margin-top: 20px;
+  cursor: pointer;
+  border: none;
+  transition: filter 250ms, opacity 250ms;
+}
+body#upload #app form button[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+body#upload #app form button:active {
+  filter: brightness(0.9);
 }
 
 body#download {
@@ -73,13 +87,8 @@ body#download #app {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 60px;
+  padding: 10px;
   max-width: 650px;
-}
-@media screen and (max-width: 480px) {
-  body#download #app {
-    padding: 10px;
-  }
 }
 body#download #app i {
   color: #2f80ed;
@@ -108,6 +117,10 @@ body#download #app a {
   box-shadow: 0px 0px 5px rgba(47, 128, 237, 0.2509803922);
   margin-top: 20px;
   cursor: pointer;
+  transition: filter 250ms;
+}
+body#download #app a:active {
+  filter: brightness(0.9);
 }
 
 body {

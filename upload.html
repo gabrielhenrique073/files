@@ -29,9 +29,15 @@
                                 isUploadFinished: false,
                                 isUploadFailed: false,
                                 uploadingProgress: 0,
+                                uploadedFileId: null,
                             }
                         },
                         methods: {
+                            onCopyClicked: async function(e){
+                                e.preventDefault();
+                                const link = new URL(e.target.attributes.href.value, window.location.origin).href;
+                                await navigator.clipboard.writeText(link);
+                            },
                             onFileSelected: function(e){
 
                                 if(!e.target.files.length)
@@ -57,7 +63,7 @@
                                                 case 201:
                                                     vue.isUploadFinished = true;
                                                     vue.isAppDestroyed = true;
-                                                    window.location = `/download.html?fileId=${req.responseText}`;
+                                                    vue.uploadedFileId = req.responseText;
                                                     break;
                                                 default:
                                                     vue.isUploadFailed = true;
@@ -83,16 +89,15 @@
     <body id="upload">
         <div id="app">
             <form method="post" action="/controllers/upload.php">
-                <div>
-                    <label for="file" :data-is-upload-failed="isUploadFailed" :data-is-upload-finished="isUploadFinished">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <span v-if="!isUploadFailed && !isUploading && !isUploadFinished">Click here to upload a file</span>
-                        <span v-if="isUploading">{{ uploadingProgress }}%</span>
-                        <span v-if="isUploadFinished">Upload finished</span>
-                        <span v-if="isUploadFailed">Upload failed, try again</span>
-                    </label>
-                    <input id="file" type="file" name="file" v-on:change="onFileSelected">
-                </div>
+                <input id="file" type="file" name="file" v-on:change="onFileSelected">
+                <label for="file" :data-is-upload-failed="isUploadFailed" :data-is-upload-finished="isUploadFinished">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span v-if="!isUploadFailed && !isUploading && !isUploadFinished">Click here to upload a file</span>
+                    <span v-if="isUploading">{{ uploadingProgress }}%</span>
+                    <span v-if="isUploadFinished">Upload finished</span>
+                    <span v-if="isUploadFailed">Upload failed, try again</span>
+                </label>
+                <button type="button" v-on:click="onCopyClicked" :disabled="!isUploadFinished" :href="'/download/' + uploadedFileId">Copy public link</button>
             </form>
         </div>
     </body>

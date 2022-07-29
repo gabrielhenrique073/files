@@ -12,12 +12,8 @@ body#download{
         align-items: center;
         gap: 10px;
 
-        padding: 60px;
+        padding: 10px;
         max-width: 650px;
-
-        @media screen and (max-width: $mobile){
-            padding: 10px;
-        }
 
         i{
             color: #2f80ed;
@@ -46,6 +42,11 @@ body#download{
             box-shadow: 0px 0px 5px #2f80ed40;
             margin-top: 20px;
             cursor: pointer;
+            transition: filter 250ms;
+
+            &:active{
+                filter: brightness(.9);
+            }
         }
     }
 }
